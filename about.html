@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>about — futurearchive.exe</title>
+<meta name="description" content="About futurearchive.exe — 3D artist & animator based in México">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000;
+  --surface:#080808;
+  --surface2:#0f0f0f;
+  --accent:#9b5cff;
+  --accent-light:#c49bff;
+  --accent-dim:#1a0d36;
+  --white:#f0f0f0;
+  --muted:#555;
+  --muted2:#888;
+  --border:#1a1a1a;
+  --border2:#2a1a4a;
+}
+html,body{background:var(--bg);color:var(--white);font-family:'Share Tech Mono',monospace;min-height:100vh;overflow-x:hidden}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:linear-gradient(rgba(155,92,255,0.03) 1px,transparent 1px),
+             linear-gradient(90deg,rgba(155,92,255,0.03) 1px,transparent 1px);
+  background-size:48px 48px;pointer-events:none;z-index:0;
+}
+body::after{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse at 70% 0%,rgba(123,55,255,0.12) 0%,transparent 55%),
+             radial-gradient(ellipse at 10% 100%,rgba(80,20,180,0.08) 0%,transparent 45%);
+  pointer-events:none;z-index:0;
+}
+.scanlines{
+  position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 3px,rgba(0,0,0,0.06) 4px);
+  pointer-events:none;z-index:1;
+}
+.wrap{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:0 28px 80px}
+
+/* NAV */
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:30px 0 22px;border-bottom:1px solid var(--border);margin-bottom:64px;
+}
+.nav-logo{
+  font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.18em;color:var(--white);text-decoration:none;text-transform:uppercase;
+}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{
+  font-size:10px;letter-spacing:.14em;color:var(--muted);
+  text-decoration:none;text-transform:uppercase;transition:color .2s;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--white)}
+.status{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(155,92,255,.4)}50%{opacity:.7;box-shadow:0 0 0 5px rgba(155,92,255,0)}}
+
+/* BREADCRUMB */
+.breadcrumb{font-size:10px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:48px;display:flex;align-items:center;gap:10px}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--white)}
+.breadcrumb .sep{color:var(--border)}
+.breadcrumb .current{color:var(--accent)}
+
+/* SECTION LABEL */
+.slabel{font-size:10px;letter-spacing:.26em;color:var(--accent);text-transform:uppercase;margin-bottom:32px;display:flex;align-items:center;gap:16px}
+.slabel::after{content:'';flex:1;height:1px;background:var(--border);max-width:160px}
+
+/* HERO */
+.about-hero{
+  display:grid;grid-template-columns:1fr 340px;gap:56px;
+  align-items:start;margin-bottom:80px;
+}
+.about-eyebrow{font-size:10px;letter-spacing:.28em;color:var(--accent);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.about-eyebrow::before{content:'';width:20px;height:1px;background:var(--accent)}
+.about-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(28px,5vw,52px);
+  font-weight:900;color:var(--white);letter-spacing:-.01em;margin-bottom:32px;
+}
+.about-title span{color:var(--accent)}
+
+.about-bio{font-size:13px;letter-spacing:.06em;color:var(--muted2);line-height:1.95}
+.about-bio p+p{margin-top:18px}
+.about-bio .hl{color:var(--white)}
+
+/* PHOTO / AVATAR BLOCK */
+.avatar-block{
+  position:sticky;top:24px;
+}
+.avatar-img{
+  width:100%;aspect-ratio:3/4;background:var(--surface);
+  border:1px solid var(--border);overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:2px;position:relative;
+}
+.avatar-img img{width:100%;height:100%;object-fit:cover;opacity:.9}
+.avatar-ph{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  font-size:9px;letter-spacing:.16em;color:var(--border2);text-transform:uppercase;
+}
+.avatar-ph-icon{
+  width:40px;height:40px;border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+}
+.c-tl,.c-br{position:absolute;width:14px;height:14px}
+.c-tl{top:0;left:0;border-top:2px solid var(--accent);border-left:2px solid var(--accent)}
+.c-br{bottom:0;right:0;border-bottom:2px solid var(--accent);border-right:2px solid var(--accent)}
+
+.avatar-caption{
+  background:var(--surface);border:1px solid var(--border);
+  padding:16px 18px;
+}
+.avatar-name{
+  font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;
+  color:var(--accent-light);letter-spacing:.06em;margin-bottom:4px;
+}
+.avatar-role{font-size:9px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+
+/* PHILOSOPHY */
+.philosophy{
+  border:1px solid var(--border2);padding:40px;
+  margin-bottom:80px;background:var(--surface);position:relative;text-align:center;
+}
+.philosophy::before{
+  content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);
+  width:60px;height:2px;background:var(--accent);
+}
+.philosophy-quote{
+  font-family:'Orbitron',sans-serif;font-size:clamp(14px,2.5vw,20px);
+  font-weight:700;color:var(--white);letter-spacing:.04em;line-height:1.5;
+  margin-bottom:16px;
+}
+.philosophy-quote span{color:var(--accent)}
+.philosophy-attr{font-size:10px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
+
+/* TOOLS FULL */
+.tools-section{margin-bottom:80px}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:2px}
+.tool{
+  background:var(--surface);border:1px solid var(--border);
+  padding:20px 18px;transition:border-color .2s,background .2s;
+}
+.tool:hover{border-color:var(--border2);background:var(--surface2)}
+.tool.main{border-color:var(--border2);background:#0a061a}
+.tool.main .tool-name{color:var(--accent-light)}
+.tool-num{font-size:9px;letter-spacing:.16em;color:var(--muted);margin-bottom:10px}
+.tool-name{font-size:12px;letter-spacing:.08em;color:var(--white);margin-bottom:4px;font-weight:700}
+.tool-type{font-size:9px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.tool-star{font-size:8px;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-top:8px}
+
+/* CURRENTLY */
+.currently{margin-bottom:80px}
+.currently-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.currently-item{
+  background:var(--surface);border:1px solid var(--border);
+  padding:24px 22px;
+}
+.currently-label{font-size:9px;letter-spacing:.2em;color:var(--accent);text-transform:uppercase;margin-bottom:10px}
+.currently-val{font-size:13px;letter-spacing:.06em;color:var(--white);line-height:1.6}
+
+/* CTA */
+.about-cta{
+  display:flex;gap:14px;flex-wrap:wrap;
+}
+.btn{
+  font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;text-decoration:none;padding:13px 28px;border:1px solid;
+  transition:all .25s;cursor:pointer;display:inline-flex;align-items:center;
+  gap:10px;background:transparent;
+}
+.btn-primary{border-color:var(--accent);color:var(--accent)}
+.btn-primary:hover{background:var(--accent);color:#000}
+.btn-ghost{border-color:var(--border);color:var(--muted)}
+.btn-ghost:hover{border-color:var(--muted);color:var(--white)}
+
+/* FOOTER */
+footer{
+  margin-top:56px;padding-top:22px;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:9px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;
+}
+footer b{color:var(--accent);font-weight:400}
+
+@media(max-width:700px){
+  .about-hero{grid-template-columns:1fr}
+  .avatar-block{position:static;order:-1}
+  .avatar-img{aspect-ratio:1/1}
+  .currently-grid{grid-template-columns:1fr}
+  nav{flex-direction:column;gap:16px;align-items:flex-start}
+  .nav-links{gap:20px}
+  .status{display:none}
+  .philosophy{padding:28px 20px}
+}
+</style>
+</head>
+<body>
+<div class="scanlines"></div>
+<div class="wrap">
+
+  <nav>
+    <a href="index.html" class="nav-logo">future<span>archive</span>.exe</a>
+    <ul class="nav-links">
+      <li><a href="index.html">home</a></li>
+      <li><a href="work.html">work</a></li>
+      <li><a href="about.html" class="active">about</a></li>
+      <li><a href="contact.html">contact</a></li>
+    </ul>
+    <div class="status"><span class="dot"></span>available</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">home</a>
+    <span class="sep">/</span>
+    <span class="current">about</span>
+  </div>
+
+  <!-- HERO: bio + photo -->
+  <section class="about-hero">
+    <div>
+      <p class="about-eyebrow">3D artist &amp; animator · México</p>
+      <h1 class="about-title">future<span>archive</span>.exe</h1>
+
+      <!-- =============================================
+           BIO — replace lorem ipsum when ready
+           Use <span class="hl">text</span> to highlight
+           key words or phrases in white
+           ============================================= -->
+      <div class="about-bio">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <span class="hl">Excepteur sint occaecat cupidatat</span> non proident, sunt in culpa qui officia deserunt mollit.</p>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, <span class="hl">totam rem aperiam eaque ipsa</span> quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur <span class="hl">magni dolores eos qui ratione</span> voluptatem sequi nesciunt.</p>
+      </div>
+    </div>
+
+    <!-- PHOTO / AVATAR -->
+    <div class="avatar-block">
+      <div class="avatar-img">
+        <div class="c-tl"></div>
+        <div class="c-br"></div>
+        <!-- Replace with your photo:
+             <img src="img/photo.jpg" alt="futurearchive.exe">
+             Remove the avatar-ph block below -->
+        <div class="avatar-ph">
+          <div class="avatar-ph-icon">▣</div>
+          your photo here
+        </div>
+      </div>
+      <div class="avatar-caption">
+        <p class="avatar-name">futurearchive.exe</p>
+        <p class="avatar-role">3D artist · animator · México</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY / QUOTE -->
+  <div class="philosophy">
+    <!-- Change this to your own phrase or creative philosophy -->
+    <p class="philosophy-quote">"archiving futures <span>that don't exist yet</span>"</p>
+    <p class="philosophy-attr">— futurearchive.exe</p>
+  </div>
+
+  <!-- TOOLS -->
+  <section class="tools-section">
+    <p class="slabel">tools &amp; software</p>
+    <div class="tools-grid">
+      <div class="tool main">
+        <p class="tool-num">01</p>
+        <p class="tool-name">Unreal Engine 5</p>
+        <p class="tool-type">real-time · environments</p>
+        <p class="tool-star">★ main tool</p>
+      </div>
+      <div class="tool main">
+        <p class="tool-num">02</p>
+        <p class="tool-name">Cinema 4D</p>
+        <p class="tool-type">3D · animation</p>
+        <p class="tool-star">★ main tool</p>
+      </div>
+      <div class="tool main">
+        <p class="tool-num">03</p>
+        <p class="tool-name">TouchDesigner</p>
+        <p class="tool-type">generative · live</p>
+        <p class="tool-star">★ main tool</p>
+      </div>
+      <div class="tool main">
+        <p class="tool-num">04</p>
+        <p class="tool-name">Houdini</p>
+        <p class="tool-type">FX · simulation</p>
+        <p class="tool-star">★ main tool</p>
+      </div>
+      <div class="tool">
+        <p class="tool-num">05</p>
+        <p class="tool-name">After Effects</p>
+        <p class="tool-type">motion · comp</p>
+      </div>
+      <div class="tool">
+        <p class="tool-num">06</p>
+        <p class="tool-name">DaVinci Resolve</p>
+        <p class="tool-type">color · edit</p>
+      </div>
+      <div class="tool">
+        <p class="tool-num">07</p>
+        <p class="tool-name">Substance Painter</p>
+        <p class="tool-type">texture · material</p>
+      </div>
+      <div class="tool">
+        <p class="tool-num">08</p>
+        <p class="tool-name">Photoshop</p>
+        <p class="tool-type">2D · retouching</p>
+      </div>
+      <div class="tool">
+        <p class="tool-num">09</p>
+        <p class="tool-name">Illustrator</p>
+        <p class="tool-type">vector · design</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CURRENTLY -->
+  <section class="currently">
+    <p class="slabel">currently</p>
+    <div class="currently-grid">
+      <div class="currently-item">
+        <p class="currently-label">working on</p>
+        <!-- Change to what you're working on -->
+        <p class="currently-val">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod.</p>
+      </div>
+      <div class="currently-item">
+        <p class="currently-label">exploring</p>
+        <!-- Change to what you're exploring / learning -->
+        <p class="currently-val">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod.</p>
+      </div>
+      <div class="currently-item">
+        <p class="currently-label">available for</p>
+        <p class="currently-val">commissions · collaborations · freelance projects</p>
+      </div>
+      <div class="currently-item">
+        <p class="currently-label">based in</p>
+        <p class="currently-val">México</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="about-cta">
+    <a href="contact.html" class="btn btn-primary">get in touch →</a>
+    <a href="work.html" class="btn btn-ghost">view work</a>
+  </div>
+
+  <footer>
+    <span>© 2025 <b>futurearchive.exe</b></span>
+    <span>3D · animation · real-time · MX</span>
+  </footer>
+
+</div>
+</body>
+</html>

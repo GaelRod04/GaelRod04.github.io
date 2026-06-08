@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>contact — futurearchive.exe</title>
+<meta name="description" content="Contact futurearchive.exe — 3D artist & animator based in México">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000;
+  --surface:#080808;
+  --surface2:#0f0f0f;
+  --accent:#9b5cff;
+  --accent-light:#c49bff;
+  --accent-dim:#1a0d36;
+  --white:#f0f0f0;
+  --muted:#555;
+  --muted2:#888;
+  --border:#1a1a1a;
+  --border2:#2a1a4a;
+}
+html,body{background:var(--bg);color:var(--white);font-family:'Share Tech Mono',monospace;min-height:100vh;overflow-x:hidden}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:linear-gradient(rgba(155,92,255,0.03) 1px,transparent 1px),
+             linear-gradient(90deg,rgba(155,92,255,0.03) 1px,transparent 1px);
+  background-size:48px 48px;pointer-events:none;z-index:0;
+}
+body::after{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse at 70% 0%,rgba(123,55,255,0.12) 0%,transparent 55%),
+             radial-gradient(ellipse at 10% 100%,rgba(80,20,180,0.08) 0%,transparent 45%);
+  pointer-events:none;z-index:0;
+}
+.scanlines{
+  position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 3px,rgba(0,0,0,0.06) 4px);
+  pointer-events:none;z-index:1;
+}
+.wrap{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:0 28px 80px}
+
+/* NAV */
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:30px 0 22px;border-bottom:1px solid var(--border);margin-bottom:64px;
+}
+.nav-logo{
+  font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.18em;color:var(--white);text-decoration:none;text-transform:uppercase;
+}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{
+  font-size:10px;letter-spacing:.14em;color:var(--muted);
+  text-decoration:none;text-transform:uppercase;transition:color .2s;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--white)}
+.status{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(155,92,255,.4)}50%{opacity:.7;box-shadow:0 0 0 5px rgba(155,92,255,0)}}
+
+/* BREADCRUMB */
+.breadcrumb{font-size:10px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:48px;display:flex;align-items:center;gap:10px}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--white)}
+.breadcrumb .sep{color:var(--border)}
+.breadcrumb .current{color:var(--accent)}
+
+/* SECTION LABEL */
+.slabel{font-size:10px;letter-spacing:.26em;color:var(--accent);text-transform:uppercase;margin-bottom:32px;display:flex;align-items:center;gap:16px}
+.slabel::after{content:'';flex:1;height:1px;background:var(--border);max-width:160px}
+
+/* HEADER */
+.contact-header{margin-bottom:72px}
+.contact-eyebrow{font-size:10px;letter-spacing:.28em;color:var(--accent);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.contact-eyebrow::before{content:'';width:20px;height:1px;background:var(--accent)}
+.contact-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(32px,6vw,64px);
+  font-weight:900;color:var(--white);letter-spacing:-.02em;
+  line-height:.95;margin-bottom:24px;
+}
+.contact-title span{color:var(--accent)}
+.contact-sub{font-size:13px;letter-spacing:.07em;color:var(--muted2);max-width:480px;line-height:1.9}
+
+/* MAIN LAYOUT */
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:80px}
+
+/* INSTAGRAM CARD — main */
+.contact-card{
+  background:var(--surface);border:1px solid var(--border);
+  padding:40px 36px;text-decoration:none;display:block;
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.contact-card::before{
+  content:'';position:absolute;inset:0;
+  background:var(--accent-dim);opacity:0;transition:opacity .3s;
+}
+.contact-card:hover::before{opacity:1}
+.contact-card:hover{border-color:var(--border2)}
+.contact-card.main{border-color:var(--border2);background:#06030f}
+
+.card-icon{
+  width:40px;height:40px;border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;margin-bottom:24px;position:relative;z-index:1;
+  transition:border-color .3s;
+}
+.contact-card:hover .card-icon{border-color:var(--accent)}
+.contact-card.main .card-icon{border-color:var(--accent)}
+
+.card-platform{
+  font-size:9px;letter-spacing:.2em;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px;position:relative;z-index:1;
+}
+.card-handle{
+  font-family:'Orbitron',sans-serif;font-size:clamp(14px,2vw,18px);
+  font-weight:700;color:var(--white);letter-spacing:.02em;
+  margin-bottom:8px;position:relative;z-index:1;
+}
+.card-desc{
+  font-size:10px;letter-spacing:.1em;color:var(--muted);
+  text-transform:uppercase;margin-bottom:28px;position:relative;z-index:1;
+}
+.card-cta{
+  font-size:10px;letter-spacing:.14em;color:var(--accent);
+  text-transform:uppercase;position:relative;z-index:1;
+  opacity:0;transition:opacity .25s,transform .25s;transform:translateX(-4px);
+}
+.contact-card:hover .card-cta{opacity:1;transform:translateX(0)}
+
+/* EMAIL PLACEHOLDER */
+.contact-card.coming{
+  border:1px dashed var(--border);background:transparent;
+  cursor:default;
+}
+.contact-card.coming::before{display:none}
+.contact-card.coming:hover{border-color:var(--border)}
+.coming-label{
+  font-size:9px;letter-spacing:.2em;color:var(--muted);
+  text-transform:uppercase;position:absolute;top:18px;right:20px;
+}
+
+/* AVAILABILITY BLOCK */
+.availability{
+  border:1px solid var(--border2);background:#06030f;
+  padding:32px 36px;margin-bottom:80px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  flex-wrap:wrap;
+}
+.avail-left{}
+.avail-status{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.avail-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+.avail-title{
+  font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;
+  color:var(--white);letter-spacing:.04em;
+}
+.avail-sub{font-size:11px;letter-spacing:.1em;color:var(--muted);margin-top:6px}
+
+.avail-tags{display:flex;gap:8px;flex-wrap:wrap}
+.avail-tag{
+  font-size:9px;letter-spacing:.14em;color:var(--accent-light);
+  text-transform:uppercase;padding:8px 14px;
+  border:1px solid var(--border2);background:var(--accent-dim);
+}
+
+/* FAQ / WHAT I DO */
+.services{margin-bottom:80px}
+.services-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.service-item{
+  background:var(--surface);border:1px solid var(--border);
+  padding:28px 24px;
+}
+.service-num{font-size:9px;letter-spacing:.2em;color:var(--muted);margin-bottom:12px}
+.service-title{
+  font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;
+  color:var(--white);letter-spacing:.04em;margin-bottom:8px;
+}
+.service-desc{font-size:11px;letter-spacing:.07em;color:var(--muted);line-height:1.8}
+
+/* FOOTER */
+footer{
+  margin-top:56px;padding-top:22px;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:9px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;
+}
+footer b{color:var(--accent);font-weight:400}
+
+@media(max-width:700px){
+  .contact-layout{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr}
+  .availability{flex-direction:column;align-items:flex-start}
+  nav{flex-direction:column;gap:16px;align-items:flex-start}
+  .nav-links{gap:20px}
+  .status{display:none}
+}
+</style>
+</head>
+<body>
+<div class="scanlines"></div>
+<div class="wrap">
+
+  <nav>
+    <a href="index.html" class="nav-logo">future<span>archive</span>.exe</a>
+    <ul class="nav-links">
+      <li><a href="index.html">home</a></li>
+      <li><a href="work.html">work</a></li>
+      <li><a href="about.html">about</a></li>
+      <li><a href="contact.html" class="active">contact</a></li>
+    </ul>
+    <div class="status"><span class="dot"></span>available</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">home</a>
+    <span class="sep">/</span>
+    <span class="current">contact</span>
+  </div>
+
+  <!-- HEADER -->
+  <div class="contact-header">
+    <p class="contact-eyebrow">get in touch</p>
+    <h1 class="contact-title">let's<br><span>connect</span></h1>
+    <p class="contact-sub">Open for commissions, collaborations and freelance projects. Reach out through Instagram — that's where I'm most active.</p>
+  </div>
+
+  <!-- CONTACT CARDS -->
+  <div class="contact-layout">
+
+    <!-- INSTAGRAM — main contact -->
+    <a href="https://www.instagram.com/futurearchive.exe/" target="_blank" class="contact-card main">
+      <div class="card-icon">◈</div>
+      <p class="card-platform">instagram</p>
+      <p class="card-handle">@futurearchive.exe</p>
+      <p class="card-desc">DMs open · fastest response</p>
+      <p class="card-cta">open instagram ↗</p>
+    </a>
+
+    <!-- EMAIL — coming soon placeholder -->
+    <div class="contact-card coming">
+      <span class="coming-label">coming soon</span>
+      <div class="card-icon" style="border-color:var(--border);color:var(--muted)">✉</div>
+      <p class="card-platform" style="color:var(--muted)">email</p>
+      <p class="card-handle" style="color:var(--muted)">— — —</p>
+      <p class="card-desc">not available yet</p>
+    </div>
+
+  </div>
+
+  <!-- AVAILABILITY -->
+  <div class="availability">
+    <div class="avail-left">
+      <div class="avail-status">
+        <span class="avail-dot"></span>
+        <span style="font-size:10px;letter-spacing:.16em;color:var(--accent);text-transform:uppercase">currently available</span>
+      </div>
+      <p class="avail-title">open for new projects</p>
+      <p class="avail-sub">reach out via instagram to discuss your project</p>
+    </div>
+    <div class="avail-tags">
+      <span class="avail-tag">commissions</span>
+      <span class="avail-tag">collabs</span>
+      <span class="avail-tag">freelance</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services">
+    <p class="slabel">what I do</p>
+    <div class="services-grid">
+      <div class="service-item">
+        <p class="service-num">01</p>
+        <p class="service-title">Real-Time Environments</p>
+        <p class="service-desc">3D environments and scenes built in Unreal Engine 5 — cinematic renders, virtual production, interactive worlds.</p>
+      </div>
+      <div class="service-item">
+        <p class="service-num">02</p>
+        <p class="service-title">3D Animation</p>
+        <p class="service-desc">Character and object animation, motion graphics, and cinematic sequences using Cinema 4D and After Effects.</p>
+      </div>
+      <div class="service-item">
+        <p class="service-num">03</p>
+        <p class="service-title">Generative Visuals</p>
+        <p class="service-desc">Real-time generative art and interactive installations built in TouchDesigner — live performance, AV shows, interactive systems.</p>
+      </div>
+      <div class="service-item">
+        <p class="service-num">04</p>
+        <p class="service-title">FX &amp; Simulation</p>
+        <p class="service-desc">Procedural effects, destruction simulations, fluid and particle systems using Houdini. Integrated into any pipeline.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2025 <b>futurearchive.exe</b></span>
+    <span>3D · animation · real-time · MX</span>
+  </footer>
+
+</div>
+</body>
+</html>

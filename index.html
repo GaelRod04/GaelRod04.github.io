@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>futurearchive.exe</title>
+<meta name="description" content="3D artist & animator based in México — archiving futures that don't exist yet.">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000;
+  --surface:#080808;
+  --surface2:#0f0f0f;
+  --accent:#9b5cff;
+  --accent-light:#c49bff;
+  --accent-dim:#1a0d36;
+  --white:#f0f0f0;
+  --muted:#555;
+  --muted2:#888;
+  --border:#1a1a1a;
+  --border2:#2a1a4a;
+}
+html,body{background:var(--bg);color:var(--white);font-family:'Share Tech Mono',monospace;min-height:100vh;overflow-x:hidden}
+
+body::before{
+  content:'';position:fixed;inset:0;
+  background:linear-gradient(rgba(155,92,255,0.03) 1px,transparent 1px),
+             linear-gradient(90deg,rgba(155,92,255,0.03) 1px,transparent 1px);
+  background-size:48px 48px;pointer-events:none;z-index:0;
+}
+body::after{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse at 70% 0%,rgba(123,55,255,0.12) 0%,transparent 55%),
+             radial-gradient(ellipse at 10% 100%,rgba(80,20,180,0.08) 0%,transparent 45%);
+  pointer-events:none;z-index:0;
+}
+.scanlines{
+  position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 3px,rgba(0,0,0,0.06) 4px);
+  pointer-events:none;z-index:1;
+}
+
+.wrap{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:0 28px 80px}
+
+/* NAV */
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:30px 0 22px;border-bottom:1px solid var(--border);margin-bottom:90px;
+}
+.nav-logo{
+  font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.18em;color:var(--white);text-decoration:none;text-transform:uppercase;
+}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{
+  font-size:10px;letter-spacing:.14em;color:var(--muted);
+  text-decoration:none;text-transform:uppercase;transition:color .2s;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--white)}
+.status{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(155,92,255,.4)}50%{opacity:.7;box-shadow:0 0 0 5px rgba(155,92,255,0)}}
+
+/* HERO */
+.hero{margin-bottom:80px}
+.hero-eyebrow{
+  font-size:10px;letter-spacing:.28em;color:var(--accent);text-transform:uppercase;
+  margin-bottom:24px;display:flex;align-items:center;gap:14px;
+}
+.hero-eyebrow::before{content:'';width:20px;height:1px;background:var(--accent)}
+.hero-name{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(40px,8vw,82px);
+  font-weight:900;line-height:.92;letter-spacing:-.02em;color:var(--white);margin-bottom:4px;
+}
+.hero-name .hl{color:var(--accent)}
+.hero-ext{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(26px,5.5vw,58px);
+  font-weight:400;color:var(--muted);letter-spacing:-.02em;margin-bottom:36px;
+}
+.cursor{
+  display:inline-block;width:3px;height:clamp(20px,4vw,44px);
+  background:var(--accent);animation:blink 1s step-end infinite;
+  vertical-align:-.05em;margin-left:4px;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-desc{font-size:13px;letter-spacing:.07em;color:var(--muted2);max-width:440px;line-height:1.9;margin-bottom:44px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+
+.btn{
+  font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;text-decoration:none;padding:13px 28px;border:1px solid;
+  transition:all .25s;cursor:pointer;display:inline-flex;align-items:center;gap:10px;background:transparent;
+}
+.btn-primary{border-color:var(--accent);color:var(--accent)}
+.btn-primary:hover{background:var(--accent);color:#000}
+.btn-ghost{border-color:var(--border);color:var(--muted)}
+.btn-ghost:hover{border-color:var(--muted);color:var(--white)}
+
+/* TICKER */
+.ticker-wrap{
+  overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:11px 0;margin-bottom:80px;
+}
+.ticker{
+  display:flex;gap:0;white-space:nowrap;animation:tick 22s linear infinite;
+  font-size:10px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;
+}
+.ticker .ta{color:var(--accent)}
+.ticker .tw{color:var(--white)}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTION LABEL */
+.slabel{
+  font-size:10px;letter-spacing:.26em;color:var(--accent);text-transform:uppercase;
+  margin-bottom:32px;display:flex;align-items:center;gap:16px;
+}
+.slabel::after{content:'';flex:1;height:1px;background:var(--border);max-width:160px}
+
+/* ABOUT */
+.about-section{margin-bottom:80px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.about-text{font-size:13px;line-height:1.95;color:var(--muted2)}
+.about-text p+p{margin-top:16px}
+.about-highlight{color:var(--white)}
+
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.stat{background:var(--surface);border:1px solid var(--border);padding:22px 18px;position:relative}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;color:var(--accent);line-height:1;margin-bottom:6px}
+.stat-label{font-size:9px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
+.c-tl,.c-br{position:absolute;width:14px;height:14px}
+.c-tl{top:0;left:0;border-top:2px solid var(--accent);border-left:2px solid var(--accent)}
+.c-br{bottom:0;right:0;border-bottom:2px solid var(--accent);border-right:2px solid var(--accent)}
+
+/* TOOLS */
+.tools-section{margin-bottom:80px}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:2px}
+.tool{
+  background:var(--surface);border:1px solid var(--border);padding:16px 14px;
+  transition:border-color .2s,background .2s;cursor:default;
+}
+.tool:hover{border-color:var(--border2);background:var(--surface2)}
+.tool.main{border-color:var(--border2);background:#0a061a}
+.tool.main .tool-name{color:var(--accent-light)}
+.tool-name{font-size:11px;letter-spacing:.08em;color:var(--white);margin-bottom:4px;font-weight:700}
+.tool-type{font-size:9px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.tool-star{font-size:8px;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-top:6px}
+
+/* CONTACT */
+.contact-section{
+  border:1px solid var(--border);padding:56px 48px;
+  text-align:center;position:relative;background:var(--surface);
+}
+.contact-section::before{
+  content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);
+  width:60px;height:2px;background:var(--accent);
+}
+.contact-title{
+  font-family:'Orbitron',sans-serif;font-size:30px;font-weight:900;
+  color:var(--white);letter-spacing:.04em;margin-bottom:10px;
+}
+.contact-title span{color:var(--accent)}
+.contact-sub{font-size:11px;letter-spacing:.1em;color:var(--muted);margin-bottom:40px}
+
+/* FOOTER */
+footer{
+  margin-top:56px;padding-top:22px;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:9px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;
+}
+footer b{color:var(--accent);font-weight:400}
+
+@media(max-width:700px){
+  .about-section{grid-template-columns:1fr}
+  nav{flex-direction:column;gap:16px;align-items:flex-start}
+  .contact-section{padding:36px 20px}
+  .nav-links{gap:20px}
+  .status{display:none}
+}
+</style>
+</head>
+<body>
+<div class="scanlines"></div>
+<div class="wrap">
+
+  <nav>
+    <a href="index.html" class="nav-logo">future<span>archive</span>.exe</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">home</a></li>
+      <li><a href="work.html">work</a></li>
+      <li><a href="about.html">about</a></li>
+      <li><a href="contact.html">contact</a></li>
+    </ul>
+    <div class="status"><span class="dot"></span>available</div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">3D artist &amp; animator · México</p>
+    <h1 class="hero-name">future<span class="hl">archive</span></h1>
+    <p class="hero-ext">.exe<span class="cursor"></span></p>
+    <p class="hero-desc">Archiving futures that don't exist yet — through 3D art, real-time worlds and motion design.</p>
+    <div class="hero-cta">
+      <a href="work.html" class="btn btn-primary">▶ &nbsp;view work</a>
+      <a href="https://www.instagram.com/futurearchive.exe/" target="_blank" class="btn btn-ghost">instagram ↗</a>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span class="ta">futurearchive.exe</span>&nbsp;&nbsp;—&nbsp;&nbsp;<span class="tw">3D art</span>&nbsp;&nbsp;—&nbsp;&nbsp;animation&nbsp;&nbsp;—&nbsp;&nbsp;<span class="ta">Unreal Engine 5</span>&nbsp;&nbsp;—&nbsp;&nbsp;motion design&nbsp;&nbsp;—&nbsp;&nbsp;<span class="tw">real-time</span>&nbsp;&nbsp;—&nbsp;&nbsp;Cinema 4D&nbsp;&nbsp;—&nbsp;&nbsp;<span class="ta">Houdini</span>&nbsp;&nbsp;—&nbsp;&nbsp;<span class="tw">TouchDesigner</span>&nbsp;&nbsp;—&nbsp;&nbsp;visual worldbuilding&nbsp;&nbsp;—&nbsp;&nbsp;<span class="ta">México</span>&nbsp;&nbsp;—&nbsp;&nbsp;
+      <span class="ta">futurearchive.exe</span>&nbsp;&nbsp;—&nbsp;&nbsp;<span class="tw">3D art</span>&nbsp;&nbsp;—&nbsp;&nbsp;animation&nbsp;&nbsp;—&nbsp;&nbsp;<span class="ta">Unreal Engine 5</span>&nbsp;&nbsp;—&nbsp;&nbsp;motion design&nbsp;&nbsp;—&nbsp;&nbsp;<span class="tw">real-time</span>&nbsp;&nbsp;—&nbsp;&nbsp;Cinema 4D&nbsp;&nbsp;—&nbsp;&nbsp;<span class="ta">Houdini</span>&nbsp;&nbsp;—&nbsp;&nbsp;<span class="tw">TouchDesigner</span>&nbsp;&nbsp;—&nbsp;&nbsp;visual worldbuilding&nbsp;&nbsp;—&nbsp;&nbsp;<span class="ta">México</span>&nbsp;&nbsp;—&nbsp;&nbsp;
+    </div>
+  </div>
+
+  <!-- ABOUT BRIEF -->
+  <section class="about-section" id="about">
+    <div>
+      <p class="slabel">about</p>
+      <div class="about-text">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua — <span class="about-highlight">futurearchive.exe</span>.</p>
+        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in <span class="about-highlight">real-time rendering, simulation and motion design</span>.</p>
+        <p>Excepteur sint occaecat cupidatat non proident — sunt in culpa qui officia deserunt <span class="about-highlight">Unreal Engine 5</span> mollit anim id est laborum.</p>
+      </div>
+    </div>
+    <div>
+      <div class="stats">
+        <div class="stat">
+          <div class="c-tl"></div>
+          <div class="stat-num">UE5</div>
+          <div class="stat-label">real-time</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">3D</div>
+          <div class="stat-label">modeling</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">TD</div>
+          <div class="stat-label">TouchDesigner</div>
+        </div>
+        <div class="stat">
+          <div class="c-br"></div>
+          <div class="stat-num">FX</div>
+          <div class="stat-label">simulation</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLS -->
+  <section class="tools-section" id="tools">
+    <p class="slabel">tools</p>
+    <div class="tools-grid">
+      <div class="tool main">
+        <div class="tool-name">Unreal Engine 5</div>
+        <div class="tool-type">real-time · env</div>
+        <div class="tool-star">★ main tool</div>
+      </div>
+      <div class="tool main">
+        <div class="tool-name">Cinema 4D</div>
+        <div class="tool-type">3D · animation</div>
+        <div class="tool-star">★ main tool</div>
+      </div>
+      <div class="tool main">
+        <div class="tool-name">TouchDesigner</div>
+        <div class="tool-type">generative · live</div>
+        <div class="tool-star">★ main tool</div>
+      </div>
+      <div class="tool main">
+        <div class="tool-name">Houdini</div>
+        <div class="tool-type">FX · simulation</div>
+        <div class="tool-star">★ main tool</div>
+      </div>
+      <div class="tool">
+        <div class="tool-name">After Effects</div>
+        <div class="tool-type">motion · comp</div>
+      </div>
+      <div class="tool">
+        <div class="tool-name">DaVinci Resolve</div>
+        <div class="tool-type">color · edit</div>
+      </div>
+      <div class="tool">
+        <div class="tool-name">Substance Painter</div>
+        <div class="tool-type">texture · material</div>
+      </div>
+      <div class="tool">
+        <div class="tool-name">Photoshop</div>
+        <div class="tool-type">2D · retouching</div>
+      </div>
+      <div class="tool">
+        <div class="tool-name">Illustrator</div>
+        <div class="tool-type">vector · design</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT BRIEF -->
+  <section class="contact-section" id="contact">
+    <h2 class="contact-title">let's <span>connect</span></h2>
+    <p class="contact-sub">open for commissions &amp; collaborations</p>
+    <a href="https://www.instagram.com/futurearchive.exe/" target="_blank" class="btn btn-primary">instagram ↗</a>
+  </section>
+
+  <footer>
+    <span>© 2025 <b>futurearchive.exe</b></span>
+    <span>3D · animation · real-time · MX</span>
+  </footer>
+
+</div>
+</body>
+</html>

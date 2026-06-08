@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>work — futurearchive.exe</title>
+<meta name="description" content="Browse projects by tool — futurearchive.exe">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000;
+  --surface:#080808;
+  --surface2:#0f0f0f;
+  --accent:#9b5cff;
+  --accent-light:#c49bff;
+  --accent-dim:#1a0d36;
+  --white:#f0f0f0;
+  --muted:#555;
+  --muted2:#888;
+  --border:#1a1a1a;
+  --border2:#2a1a4a;
+}
+html,body{background:var(--bg);color:var(--white);font-family:'Share Tech Mono',monospace;min-height:100vh;overflow-x:hidden}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:linear-gradient(rgba(155,92,255,0.03) 1px,transparent 1px),
+             linear-gradient(90deg,rgba(155,92,255,0.03) 1px,transparent 1px);
+  background-size:48px 48px;pointer-events:none;z-index:0;
+}
+body::after{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse at 70% 0%,rgba(123,55,255,0.12) 0%,transparent 55%),
+             radial-gradient(ellipse at 10% 100%,rgba(80,20,180,0.08) 0%,transparent 45%);
+  pointer-events:none;z-index:0;
+}
+.scanlines{
+  position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 3px,rgba(0,0,0,0.06) 4px);
+  pointer-events:none;z-index:1;
+}
+.wrap{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:0 28px 80px}
+
+/* NAV */
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:30px 0 22px;border-bottom:1px solid var(--border);margin-bottom:64px;
+}
+.nav-logo{
+  font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.18em;color:var(--white);text-decoration:none;text-transform:uppercase;
+}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{
+  font-size:10px;letter-spacing:.14em;color:var(--muted);
+  text-decoration:none;text-transform:uppercase;transition:color .2s;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--white)}
+.status{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(155,92,255,.4)}50%{opacity:.7;box-shadow:0 0 0 5px rgba(155,92,255,0)}}
+
+/* BREADCRUMB */
+.breadcrumb{font-size:10px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:48px;display:flex;align-items:center;gap:10px}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--white)}
+.breadcrumb .sep{color:var(--border)}
+.breadcrumb .current{color:var(--accent)}
+
+/* SECTION LABEL */
+.slabel{font-size:10px;letter-spacing:.26em;color:var(--accent);text-transform:uppercase;margin-bottom:32px;display:flex;align-items:center;gap:16px}
+.slabel::after{content:'';flex:1;height:1px;background:var(--border);max-width:160px}
+
+/* HEADER */
+.page-header{margin-bottom:56px}
+.page-title{font-family:'Orbitron',sans-serif;font-size:clamp(28px,5vw,52px);font-weight:900;color:var(--white);letter-spacing:-.01em;margin-bottom:12px}
+.page-title span{color:var(--accent)}
+.page-sub{font-size:12px;letter-spacing:.08em;color:var(--muted)}
+
+/* TOOLS HUB GRID */
+.tools-hub{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:80px}
+
+.tool-card{
+  background:var(--surface);border:1px solid var(--border);
+  padding:40px 36px;cursor:pointer;transition:all .3s;
+  position:relative;overflow:hidden;text-decoration:none;display:block;
+}
+.tool-card::before{
+  content:'';position:absolute;inset:0;
+  background:var(--accent-dim);opacity:0;transition:opacity .3s;
+}
+.tool-card:hover::before{opacity:1}
+.tool-card:hover{border-color:var(--border2)}
+
+.tool-card.main{border-color:var(--border2);background:#06030f}
+.tool-card.main .tool-card-name{color:var(--accent-light)}
+.tool-card.main::after{
+  content:'★ main';position:absolute;top:18px;right:20px;
+  font-family:'Share Tech Mono',monospace;
+  font-size:9px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;
+}
+
+.tool-card-num{
+  font-family:'Orbitron',sans-serif;font-size:10px;color:var(--muted);
+  letter-spacing:.2em;margin-bottom:24px;position:relative;z-index:1;
+}
+.tool-card-name{
+  font-family:'Orbitron',sans-serif;font-size:clamp(18px,2.5vw,24px);
+  font-weight:900;color:var(--white);letter-spacing:.02em;
+  margin-bottom:8px;position:relative;z-index:1;
+}
+.tool-card-type{
+  font-size:10px;letter-spacing:.14em;color:var(--muted);
+  text-transform:uppercase;position:relative;z-index:1;margin-bottom:28px;
+}
+.tool-card-arrow{
+  font-size:10px;letter-spacing:.12em;color:var(--accent);
+  text-transform:uppercase;position:relative;z-index:1;
+  opacity:0;transition:opacity .25s;transform:translateX(-4px);
+  transition:opacity .25s, transform .25s;
+}
+.tool-card:hover .tool-card-arrow{opacity:1;transform:translateX(0)}
+
+.tool-card-count{
+  position:absolute;bottom:24px;right:28px;
+  font-size:10px;letter-spacing:.1em;color:var(--muted);
+  text-transform:uppercase;z-index:1;
+}
+
+/* corner deco on first and last card */
+.c-tl,.c-br{position:absolute;width:14px;height:14px;z-index:2}
+.c-tl{top:0;left:0;border-top:2px solid var(--accent);border-left:2px solid var(--accent)}
+.c-br{bottom:0;right:0;border-bottom:2px solid var(--accent);border-right:2px solid var(--accent)}
+
+/* TICKER */
+.ticker-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:11px 0;margin-bottom:0}
+.ticker{display:flex;gap:0;white-space:nowrap;animation:tick 22s linear infinite;font-size:10px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
+.ticker .ta{color:var(--accent)}
+.ticker .tw{color:var(--white)}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* FOOTER */
+footer{
+  margin-top:56px;padding-top:22px;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:9px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;
+}
+footer b{color:var(--accent);font-weight:400}
+
+@media(max-width:700px){
+  .tools-hub{grid-template-columns:1fr}
+  nav{flex-direction:column;gap:16px;align-items:flex-start}
+  .nav-links{gap:20px}
+  .status{display:none}
+  .tool-card{padding:28px 24px}
+}
+</style>
+</head>
+<body>
+<div class="scanlines"></div>
+<div class="wrap">
+
+  <nav>
+    <a href="index.html" class="nav-logo">future<span>archive</span>.exe</a>
+    <ul class="nav-links">
+      <li><a href="index.html">home</a></li>
+      <li><a href="work.html" class="active">work</a></li>
+      <li><a href="about.html">about</a></li>
+      <li><a href="contact.html">contact</a></li>
+    </ul>
+    <div class="status"><span class="dot"></span>available</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="index.html">home</a>
+    <span class="sep">/</span>
+    <span class="current">work</span>
+  </div>
+
+  <div class="page-header">
+    <p class="slabel">work</p>
+    <h1 class="page-title">select a <span>tool</span></h1>
+    <p class="page-sub">browse projects by software — click to explore</p>
+  </div>
+
+  <div class="tools-hub">
+
+    <a href="work/ue5.html" class="tool-card main">
+      <div class="c-tl"></div>
+      <p class="tool-card-num">01</p>
+      <p class="tool-card-name">Unreal Engine 5</p>
+      <p class="tool-card-type">real-time · environments · rendering</p>
+      <p class="tool-card-arrow">explore projects →</p>
+      <span class="tool-card-count">— projects</span>
+    </a>
+
+    <a href="work/cinema4d.html" class="tool-card main">
+      <p class="tool-card-num">02</p>
+      <p class="tool-card-name">Cinema 4D</p>
+      <p class="tool-card-type">3D modeling · animation · motion</p>
+      <p class="tool-card-arrow">explore projects →</p>
+      <span class="tool-card-count">— projects</span>
+    </a>
+
+    <a href="work/touchdesigner.html" class="tool-card main">
+      <p class="tool-card-num">03</p>
+      <p class="tool-card-name">TouchDesigner</p>
+      <p class="tool-card-type">generative · real-time · interactive</p>
+      <p class="tool-card-arrow">explore projects →</p>
+      <span class="tool-card-count">— projects</span>
+    </a>
+
+    <a href="work/houdini.html" class="tool-card main">
+      <div class="c-br"></div>
+      <p class="tool-card-num">04</p>
+      <p class="tool-card-name">Houdini</p>
+      <p class="tool-card-type">FX · simulation · procedural</p>
+      <p class="tool-card-arrow">explore projects →</p>
+      <span class="tool-card-count">— projects</span>
+    </a>
+
+  </div>
+
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span class="ta">futurearchive.exe</span>&nbsp;&nbsp;—&nbsp;&nbsp;<span class="tw">3D art</span>&nbsp;&nbsp;—&nbsp;&nbsp;animation&nbsp;&nbsp;—&nbsp;&nbsp;<span class="ta">Unreal Engine 5</span>&nbsp;&nbsp;—&nbsp;&nbsp;motion design&nbsp;&nbsp;—&nbsp;&nbsp;<span class="tw">real-time</span>&nbsp;&nbsp;—&nbsp;&nbsp;Cinema 4D&nbsp;&nbsp;—&nbsp;&nbsp;<span class="ta">Houdini</span>&nbsp;&nbsp;—&nbsp;&nbsp;<span class="tw">TouchDesigner</span>&nbsp;&nbsp;—&nbsp;&nbsp;visual worldbuilding&nbsp;&nbsp;—&nbsp;&nbsp;<span class="ta">México</span>&nbsp;&nbsp;—&nbsp;&nbsp;
+      <span class="ta">futurearchive.exe</span>&nbsp;&nbsp;—&nbsp;&nbsp;<span class="tw">3D art</span>&nbsp;&nbsp;—&nbsp;&nbsp;animation&nbsp;&nbsp;—&nbsp;&nbsp;<span class="ta">Unreal Engine 5</span>&nbsp;&nbsp;—&nbsp;&nbsp;motion design&nbsp;&nbsp;—&nbsp;&nbsp;<span class="tw">real-time</span>&nbsp;&nbsp;—&nbsp;&nbsp;Cinema 4D&nbsp;&nbsp;—&nbsp;&nbsp;<span class="ta">Houdini</span>&nbsp;&nbsp;—&nbsp;&nbsp;<span class="tw">TouchDesigner</span>&nbsp;&nbsp;—&nbsp;&nbsp;visual worldbuilding&nbsp;&nbsp;—&nbsp;&nbsp;<span class="ta">México</span>&nbsp;&nbsp;—&nbsp;&nbsp;
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2025 <b>futurearchive.exe</b></span>
+    <span>3D · animation · real-time · MX</span>
+  </footer>
+
+</div>
+</body>
+</html>
