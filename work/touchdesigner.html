@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TouchDesigner — futurearchive.exe</title>
+<meta name="description" content="TouchDesigner projects — futurearchive.exe">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000;
+  --surface:#080808;
+  --surface2:#0f0f0f;
+  --accent:#9b5cff;
+  --accent-light:#c49bff;
+  --accent-dim:#1a0d36;
+  --white:#f0f0f0;
+  --muted:#555;
+  --muted2:#888;
+  --border:#1a1a1a;
+  --border2:#2a1a4a;
+}
+html,body{background:var(--bg);color:var(--white);font-family:'Share Tech Mono',monospace;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:linear-gradient(rgba(155,92,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(155,92,255,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 70% 0%,rgba(123,55,255,0.12) 0%,transparent 55%),radial-gradient(ellipse at 10% 100%,rgba(80,20,180,0.08) 0%,transparent 45%);pointer-events:none;z-index:0}
+.scanlines{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 3px,rgba(0,0,0,0.06) 4px);pointer-events:none;z-index:1}
+.wrap{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:0 28px 80px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:30px 0 22px;border-bottom:1px solid var(--border);margin-bottom:48px}
+.nav-logo{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--white);text-decoration:none;text-transform:uppercase}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-size:10px;letter-spacing:.14em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--white)}
+.status{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(155,92,255,.4)}50%{opacity:.7;box-shadow:0 0 0 5px rgba(155,92,255,0)}}
+.breadcrumb{font-size:10px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:40px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--white)}
+.breadcrumb .sep{color:var(--border)}
+.breadcrumb .current{color:var(--accent)}
+.slabel{font-size:10px;letter-spacing:.26em;color:var(--accent);text-transform:uppercase;margin-bottom:32px;display:flex;align-items:center;gap:16px}
+.slabel::after{content:'';flex:1;height:1px;background:var(--border);max-width:160px}
+.gallery-header{margin-bottom:52px}
+.gallery-title{font-family:'Orbitron',sans-serif;font-size:clamp(24px,4.5vw,46px);font-weight:900;color:var(--white);letter-spacing:-.01em;margin-bottom:8px}
+.gallery-title span{color:var(--accent)}
+.gallery-sub{font-size:11px;letter-spacing:.1em;color:var(--muted)}
+.gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-bottom:80px}
+.gallery-item{position:relative;background:var(--surface);border:1px solid var(--border);aspect-ratio:4/3;overflow:hidden;cursor:pointer;display:block;text-decoration:none;transition:border-color .3s}
+.gallery-item:hover{border-color:var(--border2)}
+.gallery-item.featured{grid-column:span 2;aspect-ratio:16/7}
+.ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;font-size:9px;letter-spacing:.18em;color:var(--border2);text-transform:uppercase}
+.ph-icon{width:36px;height:36px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:16px}
+.gallery-item img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85;transition:opacity .35s,transform .5s}
+.gallery-item:hover img{opacity:1;transform:scale(1.03)}
+.overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.94) 0%,rgba(0,0,0,.1) 55%,transparent 100%);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:24px}
+.gallery-item:hover .overlay{opacity:1}
+.ov-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:#fff;letter-spacing:.05em;margin-bottom:4px}
+.ov-tag{font-size:9px;letter-spacing:.16em;color:var(--accent);text-transform:uppercase;margin-bottom:10px}
+.ov-cta{font-size:9px;letter-spacing:.14em;color:var(--muted2);text-transform:uppercase}
+.c-tl,.c-br{position:absolute;width:14px;height:14px;z-index:2;pointer-events:none}
+.c-tl{top:0;left:0;border-top:2px solid var(--accent);border-left:2px solid var(--accent)}
+.c-br{bottom:0;right:0;border-bottom:2px solid var(--accent);border-right:2px solid var(--accent)}
+.tool-nav{display:flex;justify-content:space-between;align-items:center;padding:24px 0;border-top:1px solid var(--border)}
+.tool-nav a{font-size:10px;letter-spacing:.14em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s;display:flex;align-items:center;gap:8px}
+.tool-nav a:hover{color:var(--accent)}
+.tool-nav .center{font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:9px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+footer b{color:var(--accent);font-weight:400}
+@media(max-width:700px){
+  .gallery-item.featured{grid-column:span 1;aspect-ratio:4/3}
+  .gallery-grid{grid-template-columns:1fr}
+  nav{flex-direction:column;gap:16px;align-items:flex-start}
+  .nav-links{gap:20px}
+  .status{display:none}
+}
+</style>
+</head>
+<body>
+<div class="scanlines"></div>
+<div class="wrap">
+
+  <nav>
+    <a href="../index.html" class="nav-logo">future<span>archive</span>.exe</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">home</a></li>
+      <li><a href="../work.html" class="active">work</a></li>
+      <li><a href="../about.html">about</a></li>
+      <li><a href="../contact.html">contact</a></li>
+    </ul>
+    <div class="status"><span class="dot"></span>available</div>
+  </nav>
+
+  <div class="breadcrumb">
+    <a href="../index.html">home</a>
+    <span class="sep">/</span>
+    <a href="../work.html">work</a>
+    <span class="sep">/</span>
+    <span class="current">touchdesigner</span>
+  </div>
+
+  <div class="gallery-header">
+    <p class="slabel">work</p>
+    <h1 class="gallery-title">Touch<span>Designer</span></h1>
+    <p class="gallery-sub">generative · real-time · interactive</p>
+  </div>
+
+  <div class="gallery-grid">
+
+    <!-- PROJECT 1 — featured -->
+    <a href="project.html?tool=td&id=1" class="gallery-item featured">
+      <div class="c-tl"></div>
+      <!-- <img src="../img/td-01.jpg" alt="project name"> -->
+      <div class="ph"><div class="ph-icon">▣</div>add your image</div>
+      <div class="overlay">
+        <div>
+          <p class="ov-title">PROJECT NAME</p>
+          <p class="ov-tag">generative visual</p>
+          <p class="ov-cta">view project →</p>
+        </div>
+      </div>
+    </a>
+
+    <!-- PROJECT 2 -->
+    <a href="project.html?tool=td&id=2" class="gallery-item">
+      <!-- <img src="../img/td-02.jpg" alt="project name"> -->
+      <div class="ph"><div class="ph-icon">▣</div>add your image</div>
+      <div class="overlay">
+        <div>
+          <p class="ov-title">PROJECT NAME</p>
+          <p class="ov-tag">real-time installation</p>
+          <p class="ov-cta">view project →</p>
+        </div>
+      </div>
+    </a>
+
+    <!-- PROJECT 3 -->
+    <a href="project.html?tool=td&id=3" class="gallery-item">
+      <div class="c-br"></div>
+      <!-- <img src="../img/td-03.jpg" alt="project name"> -->
+      <div class="ph"><div class="ph-icon">▣</div>add your image</div>
+      <div class="overlay">
+        <div>
+          <p class="ov-title">PROJECT NAME</p>
+          <p class="ov-tag">interactive system</p>
+          <p class="ov-cta">view project →</p>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="tool-nav">
+    <a href="cinema4d.html">← cinema 4d</a>
+    <span class="center">03 / 04</span>
+    <a href="houdini.html">houdini →</a>
+  </div>
+
+  <footer>
+    <span>© 2025 <b>futurearchive.exe</b></span>
+    <span>3D · animation · real-time · MX</span>
+  </footer>
+
+</div>
+</body>
+</html>
