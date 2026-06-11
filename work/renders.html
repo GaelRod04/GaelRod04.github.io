@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>renders — futurearchive.exe</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#000;--surface:#080808;--accent:#9b5cff;--accent-light:#c49bff;--accent-dim:#1a0d36;--white:#f0f0f0;--muted:#555;--muted2:#888;--border:#1a1a1a;--border2:#2a1a4a}
+html,body{background:var(--bg);color:var(--white);font-family:'Share Tech Mono',monospace;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:linear-gradient(rgba(155,92,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(155,92,255,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 70% 0%,rgba(123,55,255,0.12) 0%,transparent 55%),radial-gradient(ellipse at 10% 100%,rgba(80,20,180,0.08) 0%,transparent 45%);pointer-events:none;z-index:0}
+.scanlines{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 3px,rgba(0,0,0,0.06) 4px);pointer-events:none;z-index:1}
+.wrap{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:0 28px 80px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:30px 0 22px;border-bottom:1px solid var(--border);margin-bottom:48px}
+.nav-logo{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--white);text-decoration:none;text-transform:uppercase}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-size:10px;letter-spacing:.14em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--white)}
+.status{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(155,92,255,.4)}50%{opacity:.7;box-shadow:0 0 0 5px rgba(155,92,255,0)}}
+.breadcrumb{font-size:10px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:40px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--white)}
+.breadcrumb .sep{color:var(--border)}
+.breadcrumb .current{color:var(--accent)}
+.slabel{font-size:10px;letter-spacing:.26em;color:var(--accent);text-transform:uppercase;margin-bottom:32px;display:flex;align-items:center;gap:16px}
+.slabel::after{content:'';flex:1;height:1px;background:var(--border);max-width:160px}
+.gallery-header{margin-bottom:52px}
+.gallery-title{font-family:'Orbitron',sans-serif;font-size:clamp(24px,4.5vw,46px);font-weight:900;color:var(--white);letter-spacing:-.01em;margin-bottom:8px}
+.gallery-title span{color:var(--accent)}
+.gallery-sub{font-size:11px;letter-spacing:.1em;color:var(--muted)}
+.renders-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:80px}
+.render-item{position:relative;background:var(--surface);border:1px solid var(--border);aspect-ratio:1/1;overflow:hidden}
+.render-item:first-child{grid-column:span 2;aspect-ratio:2/1}
+.render-item img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85;transition:opacity .35s,transform .5s}
+.render-item:hover img{opacity:1;transform:scale(1.04)}
+.tool-nav{display:flex;justify-content:space-between;align-items:center;padding:24px 0;border-top:1px solid var(--border)}
+.tool-nav a{font-size:10px;letter-spacing:.14em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s}
+.tool-nav a:hover{color:var(--accent)}
+footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:9px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+footer b{color:var(--accent);font-weight:400}
+@media(max-width:700px){.renders-grid{grid-template-columns:1fr 1fr}.render-item:first-child{grid-column:span 2}nav{flex-direction:column;gap:16px;align-items:flex-start}.nav-links{gap:20px}.status{display:none}}
+</style>
+</head>
+<body>
+<div class="scanlines"></div>
+<div class="wrap">
+  <nav>
+    <a href="../index.html" class="nav-logo">future<span>archive</span>.exe</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">home</a></li>
+      <li><a href="../work.html" class="active">work</a></li>
+      <li><a href="../about.html">about</a></li>
+      <li><a href="../contact.html">contact</a></li>
+    </ul>
+    <div class="status"><span class="dot"></span>available</div>
+  </nav>
+  <div class="breadcrumb">
+    <a href="../index.html">home</a>
+    <span class="sep">/</span>
+    <a href="../work.html">work</a>
+    <span class="sep">/</span>
+    <span class="current">renders</span>
+  </div>
+  <div class="gallery-header">
+    <p class="slabel">work</p>
+    <h1 class="gallery-title">render <span>archive</span></h1>
+    <p class="gallery-sub">a collection of standalone renders and experiments</p>
+  </div>
+  <div class="renders-grid">
+    <div class="render-item"><img src="../img/rendersvarios.jpg" alt="render"></div>
+    <div class="render-item"><img src="../img/rendersvarios1.jpg" alt="render"></div>
+    <div class="render-item"><img src="../img/rendersvarios2.jpg" alt="render"></div>
+    <div class="render-item"><img src="../img/rendersvarios3.jpg" alt="render"></div>
+    <div class="render-item"><img src="../img/rendersvarios4.jpg" alt="render"></div>
+    <div class="render-item"><img src="../img/rendersvarios5.jpg" alt="render"></div>
+    <div class="render-item"><img src="../img/rendersvarios6.jpg" alt="render"></div>
+    <div class="render-item"><img src="../img/rendersvarios7.jpg" alt="render"></div>
+    <div class="render-item"><img src="../img/rendersvarios8.jpg" alt="render"></div>
+  </div>
+  <div class="tool-nav">
+    <a href="../work.html">← all tools</a>
+  </div>
+  <footer>
+    <span>© 2025 <b>futurearchive.exe</b></span>
+    <span>3D · animation · real-time · MX</span>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bart Upside Down — futurearchive.exe</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#000;--surface:#080808;--surface2:#0f0f0f;--accent:#9b5cff;--accent-light:#c49bff;--accent-dim:#1a0d36;--white:#f0f0f0;--muted:#555;--muted2:#888;--border:#1a1a1a;--border2:#2a1a4a}
+html,body{background:var(--bg);color:var(--white);font-family:'Share Tech Mono',monospace;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:linear-gradient(rgba(155,92,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(155,92,255,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 70% 0%,rgba(123,55,255,0.12) 0%,transparent 55%),radial-gradient(ellipse at 10% 100%,rgba(80,20,180,0.08) 0%,transparent 45%);pointer-events:none;z-index:0}
+.scanlines{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 3px,rgba(0,0,0,0.06) 4px);pointer-events:none;z-index:1}
+.wrap{position:relative;z-index:2;max-width:920px;margin:0 auto;padding:0 28px 80px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:30px 0 22px;border-bottom:1px solid var(--border);margin-bottom:48px}
+.nav-logo{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--white);text-decoration:none;text-transform:uppercase}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-size:10px;letter-spacing:.14em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--white)}
+.status{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(155,92,255,.4)}50%{opacity:.7;box-shadow:0 0 0 5px rgba(155,92,255,0)}}
+.breadcrumb{font-size:10px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:40px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.breadcrumb a{color:var(--muted);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--white)}
+.breadcrumb .sep{color:var(--border)}
+.breadcrumb .current{color:var(--accent)}
+.project-hero{position:relative;background:var(--surface);border:1px solid var(--border);aspect-ratio:16/8;overflow:hidden;margin-bottom:48px}
+.project-hero video{width:100%;height:100%;object-fit:cover;opacity:.9;display:block}
+.project-hero img{width:100%;height:100%;object-fit:cover;opacity:.9;display:block}
+.c-tl,.c-br{position:absolute;width:16px;height:16px;z-index:2}
+.c-tl{top:0;left:0;border-top:2px solid var(--accent);border-left:2px solid var(--accent)}
+.c-br{bottom:0;right:0;border-bottom:2px solid var(--accent);border-right:2px solid var(--accent)}
+.project-layout{display:grid;grid-template-columns:1fr 300px;gap:56px;align-items:start;margin-bottom:64px}
+.project-tool{font-size:10px;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;margin-bottom:16px}
+.project-title{font-family:'Orbitron',sans-serif;font-size:clamp(22px,4vw,40px);font-weight:900;color:var(--white);letter-spacing:-.01em;margin-bottom:24px}
+.project-title span{color:var(--accent)}
+.project-desc{font-size:13px;letter-spacing:.06em;color:var(--muted2);line-height:1.95;margin-bottom:36px}
+.project-desc p+p{margin-top:16px}
+.btn{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:13px 28px;border:1px solid;transition:all .25s;cursor:pointer;display:inline-flex;align-items:center;gap:10px;background:transparent}
+.btn-primary{border-color:var(--accent);color:var(--accent)}
+.btn-primary:hover{background:var(--accent);color:#000}
+.btn-ghost{border-color:var(--border);color:var(--muted)}
+.btn-ghost:hover{border-color:var(--muted);color:var(--white)}
+.btn-group{display:flex;gap:12px;flex-wrap:wrap}
+.meta-panel{background:var(--surface);border:1px solid var(--border);position:sticky;top:24px}
+.meta-header{padding:16px 20px;border-bottom:1px solid var(--border);font-size:9px;letter-spacing:.2em;color:var(--accent);text-transform:uppercase}
+.meta-row{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.meta-row:last-child{border-bottom:none}
+.meta-key{font-size:9px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;flex-shrink:0}
+.meta-val{font-size:11px;letter-spacing:.06em;color:var(--white);text-align:right}
+.meta-val.accent{color:var(--accent)}
+.extra-images{margin-bottom:64px}
+.slabel{font-size:10px;letter-spacing:.26em;color:var(--accent);text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:16px}
+.slabel::after{content:'';flex:1;height:1px;background:var(--border);max-width:160px}
+.extra-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.extra-item{position:relative;background:var(--surface);border:1px solid var(--border);aspect-ratio:4/3;overflow:hidden}
+.extra-item img{width:100%;height:100%;object-fit:cover;opacity:.85;transition:opacity .3s}
+.extra-item:hover img{opacity:1}
+.project-nav{display:flex;justify-content:space-between;align-items:center;padding:24px 0;border-top:1px solid var(--border)}
+.project-nav a{font-size:10px;letter-spacing:.14em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color .2s}
+.project-nav a:hover{color:var(--accent)}
+footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:9px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+footer b{color:var(--accent);font-weight:400}
+@media(max-width:700px){.project-layout{grid-template-columns:1fr}.meta-panel{position:static}.extra-grid{grid-template-columns:1fr 1fr}nav{flex-direction:column;gap:16px;align-items:flex-start}.nav-links{gap:20px}.status{display:none}}
+</style>
+</head>
+<body>
+<div class="scanlines"></div>
+<div class="wrap">
+  <nav>
+    <a href="../index.html" class="nav-logo">future<span>archive</span>.exe</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">home</a></li>
+      <li><a href="../work.html" class="active">work</a></li>
+      <li><a href="../about.html">about</a></li>
+      <li><a href="../contact.html">contact</a></li>
+    </ul>
+    <div class="status"><span class="dot"></span>available</div>
+  </nav>
+  <div class="breadcrumb">
+    <a href="../index.html">home</a>
+    <span class="sep">/</span>
+    <a href="../work.html">work</a>
+    <span class="sep">/</span>
+    <a href="ue5.html">unreal engine 5</a>
+    <span class="sep">/</span>
+    <span class="current">bart upside down</span>
+  </div>
+  <div class="project-hero">
+    <div class="c-tl"></div>
+    <div class="c-br"></div>
+    <img src="../img/bartupsidedown2-ue5-proyecto03.png" alt="Bart Upside Down">
+  </div>
+  <div class="project-layout">
+    <div>
+      <p class="project-tool">Unreal Engine 5 · audiovisual</p>
+      <h1 class="project-title">BART <span>UPSIDE DOWN</span></h1>
+      <div class="project-desc">
+        <p>An audiovisual piece built around the collision of three aesthetics that have no reason to coexist — and that's exactly the point. A reimagined Bart Simpson with a mullet and boots, placed inside his house from The Simpsons but set in the Upside Down. All of it scored to Caramel Dansen.</p>
+        <p>The disconnect between the visuals and the soundtrack is intentional. Nothing matches, yet somehow it all fits — a piece about how unexpected combinations can create something that feels completely right.</p>
+      </div>
+      <div class="btn-group">
+        <a href="https://www.instagram.com/futurearchive.exe/" target="_blank" class="btn btn-primary">view on instagram ↗</a>
+        <a href="ue5.html" class="btn btn-ghost">← back to gallery</a>
+      </div>
+    </div>
+    <div class="meta-panel">
+      <div class="meta-header">project info</div>
+      <div class="meta-row"><span class="meta-key">tool</span><span class="meta-val">Unreal Engine 5</span></div>
+      <div class="meta-row"><span class="meta-key">type</span><span class="meta-val">audiovisual</span></div>
+      <div class="meta-row"><span class="meta-key">aesthetic</span><span class="meta-val">mixed · surreal</span></div>
+      <div class="meta-row"><span class="meta-key">year</span><span class="meta-val">2025</span></div>
+      <div class="meta-row"><span class="meta-key">status</span><span class="meta-val accent">completed</span></div>
+    </div>
+  </div>
+  <div class="extra-images">
+    <p class="slabel">more</p>
+    <div class="extra-grid">
+      <div class="extra-item"><img src="../img/bartupsidedown3-ue5-proyecto03.png" alt="Bart Upside Down detail"></div>
+      <div class="extra-item"><img src="../img/bartupsidedown4-ue5-proyecto03.png" alt="Bart Upside Down detail"></div>
+      <div class="extra-item"><img src="../img/bartupsidedown5-ue5-proyecto03.png" alt="Bart Upside Down detail"></div>
+    </div>
+  </div>
+  <div class="project-nav">
+    <a href="project-ue5-doors.html">← doors</a>
+    <a href="ue5.html">ue5 gallery</a>
+    <a href="cinema4d.html">cinema 4d →</a>
+  </div>
+  <footer>
+    <span>© 2025 <b>futurearchive.exe</b></span>
+    <span>3D · animation · real-time · MX</span>
+  </footer>
+</div>
+</body>
+</html>
